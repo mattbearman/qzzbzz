@@ -15,6 +15,22 @@ Rails.application.routes.draw do
   # root "posts#index"
 
   resources :quizzes, only: %i[new create show] do
+    resource :question, only: %i[show] do
+      collection do
+        post :buzz
+        post :next
+      end
+    end
+
+    resources :answers, only: %i[index show] do
+      post :call_fastest_player, on: :collection
+
+      member do
+        post :correct
+        post :incorrect
+      end
+    end
+
     member do
       post :join
       post :start

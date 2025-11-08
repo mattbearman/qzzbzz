@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class QuizzesController < ApplicationController
-  before_action :host_only, only: %i[start next_question end]
+  before_action :host_only, only: %i[start end]
 
   def new
   end
@@ -33,31 +33,14 @@ class QuizzesController < ApplicationController
     @player = @quiz.players.create!(name: params[:name])
     session[:player_id] = @player.id
 
-    Turbo::StreamsChannel.broadcast_update_to "quizzes_#{params[:id]}", target: "players", html: @quiz.players.map { |p| "<li>#{p.name}</li>" }.join.html_safe
+    @quiz.broadcast_players
   end
 
   def start
     @quiz = Quiz.find_by!(code: params[:id])
-    @quiz.update!(started_at: Time.current)
+    @quiz.start!
 
-    Turbo::StreamsChannel.broadcast_update_to "quizzes_#{params[:id]}", target: "quiz_status", html: "<p>Quiz Started!</p>".html_safe
-
-    redirect_to quiz_path(@quiz)
-  end
-
-  def buzz
-    buzzed_at = Time.current
-    @quiz = Quiz.find_by!(code: params[:id])
-    @player = @quiz.players.find_by!(id: session[:player_id])
-    @player.update!(buzzed_at: buzzed_at)
-
-    # head :no_content
-  end
-
-  def next_question
-    @quiz = Quiz.find_by!(code: params[:id])
-
-    Turbo::StreamsChannel.broadcast_update_to "quizzes_#{params[:id]}", target: "quiz_status", html: "<p>Quiz Ended!</p>".html_safe
+    redirect_to quiz_question_path(@quiz)
   end
 
   def end

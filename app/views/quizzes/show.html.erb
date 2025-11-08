@@ -1,7 +1,7 @@
 <% if @is_host %>
   <h1>Join at <%= quiz_url(@quiz) %></h1>
 
-  <%= turbo_stream_from "quizzes_#{@quiz.code}" %>
+  <%= turbo_stream_from @quiz %>
   <h2>Players Joined:</h2>
   <ul id="players">
     <% @quiz.players.each do |player| %>

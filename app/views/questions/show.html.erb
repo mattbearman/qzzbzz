@@ -1,0 +1,13 @@
+<% if @is_host %>
+  <h1>Waiting for players to buzz in...</h1>
+
+  <%= link_to "Show Answers", quiz_answers_path(@quiz) %>
+<% elsif @player&.buzzed_at.present? %>
+  <%= turbo_stream_from @player %>
+  <div id="quiz">
+    <h1>You have buzzed in</h1>
+    <p>Please wait to see if you were fastest</p>
+  </div>
+<% else %>
+  <%= render "buzz", quiz: @quiz %>
+<% end %>

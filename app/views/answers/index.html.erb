@@ -1,7 +1,0 @@
-<ul>
-  <% @quiz.players.fastest(10).each do |player| %>
-    <li><%= player.name %> - <%= player.buzzed_at.strftime("%H:%M:%S") %></li>
-  <% end %>
-
-  <%= button_to "Call Fastest Player", call_fastest_player_quiz_answers_path(@quiz), method: :post %>
-</ul>

@@ -1,0 +1,7 @@
+<h1>Waiting for players to buzz in...</h1>
+
+<%= turbo_stream_from @quiz %>
+<p id="buzzed_players"></p>
+<%= button_to "Call Fastest Player", call_fastest_player_host_quiz_question_path, method: :post %>
+<%= button_to "Next Question", next_host_quiz_question_path, method: :post %>
+<%= button_to "Finish Quiz", end_host_quiz_path, method: :post %>

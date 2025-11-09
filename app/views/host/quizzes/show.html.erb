@@ -1,0 +1,24 @@
+<% if @quiz.ended? %>
+  <h1>The quiz has ended.</h1>
+
+  <h2>Leaderboard:</h2>
+  <ul>
+    <% @quiz.players.order(score: :desc).each do |player| %>
+      <li><%= player.name %> - <%= player.score %> points</li>
+    <% end %>
+  </ul>
+<% else %>
+  <h1>Join at <%= @join_link %></h1>
+
+  <%= @svg.html_safe %>
+
+  <%= turbo_stream_from @quiz %>
+  <h2>Players Joined:</h2>
+  <ul id="players">
+    <% @quiz.players.each do |player| %>
+      <li><%= player.name %></li>
+    <% end %>
+  </ul>
+
+  <%= button_to 'Start Quiz', start_host_quiz_path %>
+<% end %>

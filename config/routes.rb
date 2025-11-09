@@ -14,29 +14,26 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
 
-  resources :quizzes, only: %i[new create show] do
-    resource :question, only: %i[show] do
-      collection do
-        post :buzz
+  namespace :host do
+    resource :quiz, only: %i[show] do
+      post :start
+      post :end
+
+      resource :question, only: %i[show] do
+        post :call_fastest_player
+        get :answer
+        post :correct
+        post :incorrect
         post :next
       end
     end
-
-    resources :answers, only: %i[index show] do
-      post :call_fastest_player, on: :collection
-
-      member do
-        post :correct
-        post :incorrect
-      end
-    end
-
-    member do
-      post :join
-      post :start
-      post :end
-    end
   end
 
+  resources :quizzes, only: %i[new create show] do
+    post :join, on: :member
 
+    resource :question, only: %i[show] do
+      post :buzz
+    end
+  end
 end

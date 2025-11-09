@@ -2,6 +2,7 @@
 
 class Quiz < ApplicationRecord
   has_many :players, dependent: :destroy
+  has_many :questions, dependent: :destroy
 
   def to_param
     code
@@ -11,8 +12,21 @@ class Quiz < ApplicationRecord
     started_at.nil? && ended_at.nil?
   end
 
+  def ended?
+    ended_at.present?
+  end
+
+  def winner
+    players.order(score: :desc).first
+  end
+
   def broadcast_players
     broadcast_update target: "players", html: players.map { |p| "<li>#{p.name}</li>" }.join.html_safe
+  end
+
+  def broadcast_buzzed_players
+    buzzed_players = players.where.not(buzzed_at: nil).order(:buzzed_at)
+    broadcast_update target: "buzzed_players", html: "#{buzzed_players.count} #{"player".pluralize(buzzed_players.count)} buzzed in"
   end
 
   def start!
@@ -26,5 +40,11 @@ class Quiz < ApplicationRecord
     players.update_all(buzzed_at: nil)
 
     broadcast_update target: "quiz", template: "questions/_buzz", locals: { quiz: self }
+  end
+
+  def end!
+    update!(ended_at: Time.current)
+
+    broadcast_update target: "quiz", html: "<h2>Quiz Ended!</h2>".html_safe
   end
 end

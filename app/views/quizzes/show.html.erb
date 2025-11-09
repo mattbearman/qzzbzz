@@ -1,19 +1,7 @@
-<% if @is_host %>
-  <h1>Join at <%= quiz_url(@quiz) %></h1>
-
-  <%= turbo_stream_from @quiz %>
-  <h2>Players Joined:</h2>
-  <ul id="players">
-    <% @quiz.players.each do |player| %>
-      <li><%= player.name %></li>
-    <% end %>
-  </ul>
-
-  <%= button_to 'Start Quiz', start_quiz_path(@quiz), method: :post %>
-<% elsif @quiz.joinable? %>
+<% if @quiz.joinable? %>
   <%= form_with url: join_quiz_path(@quiz), method: :post, data: { turbo: false } do |form| %>
     <div>
-      <%= form.label :name, "Enter your name to join the quiz:" %>
+      <%= form.label :name, "Enter your name to join the quiz '#{@quiz.name}':" %>
       <%= form.text_field :name %>
     </div>
     <div>

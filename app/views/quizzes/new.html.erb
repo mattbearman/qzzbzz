@@ -1,1 +1,9 @@
-<%= button_to 'Create Quiz', quizzes_path, method: :post %>
+<%= form_for :quiz, url: quizzes_path do |form| %>
+  <div>
+    <%= form.label :name, "Enter your name to join the quiz:" %>
+    <%= form.text_field :name %>
+  </div>
+  <div>
+    <%= form.submit "Create Quiz" %>
+  </div>
+<% end %>

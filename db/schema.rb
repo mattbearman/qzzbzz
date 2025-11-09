@@ -25,6 +25,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_08_171539) do
     t.string "code", null: false
     t.datetime "created_at", null: false
     t.datetime "ended_at"
+    t.string "name", null: false
     t.datetime "started_at"
     t.datetime "updated_at", null: false
     t.index ["code"], name: "index_quizzes_on_code", unique: true

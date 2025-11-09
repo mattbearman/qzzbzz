@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class QuestionsController < ApplicationController
-  before_action :find_quiz, only: %i[show]
+  before_action :find_quiz!, only: %i[show]
+  before_action :no_host
 
   def show
     @player = @quiz.players.find_by(id: session[:player_id])
@@ -20,7 +21,11 @@ class QuestionsController < ApplicationController
 
   private
 
-  def find_quiz
+  def find_quiz!
     @quiz = Quiz.find_by!(code: params[:quiz_id])
+  end
+
+  def no_host
+    redirect_to host_quiz_path if session[:hosting_quiz_id] == params[:quiz_id]
   end
 end

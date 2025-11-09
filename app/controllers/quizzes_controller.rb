@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 class QuizzesController < ApplicationController
+  before_action :find_quiz!, only: %i[show join]
+  before_action :find_player, only: %i[show join]
+  before_action :no_host, only: %i[show join]
+
   def new
   end
 
@@ -8,32 +12,39 @@ class QuizzesController < ApplicationController
     quiz_params = params.require(:quiz).permit(:name)
     @quiz = Quiz.create!(code: SecureRandom.alphanumeric(6).upcase, name: quiz_params[:name])
 
-    session[:hosting] = @quiz.code
+    session[:hosting_quiz_id] = @quiz.id
 
     redirect_to host_quiz_path
   end
 
   def show
-    # TOOD: NO hosts
-
-    @is_host = session[:hosting] == params[:id]
-    @quiz = Quiz.find_by(code: params[:id])
-    # return render_404 unless @quiz
+    if @quiz.started? && @player&.quiz_id == @quiz.id
+      return redirect_to quiz_question_path(quiz_id: @quiz.code)
+    end
   end
 
   def join
-    redirect_to quiz_path(id: params[:id]) if session[:hosting] == params[:id]
+    if @quiz.joinable? && @player&.quiz_id != @quiz.id
+      @player = @quiz.players.create!(name: params[:name])
+      session[:player_id] = @player.id
 
-    @quiz = Quiz.find_by(code: params[:id])
+      @quiz.broadcast_players
+    end
 
-    # TODO Show a 404 if quiz not found
-    # return render_404 unless @quiz
+    redirect_to quiz_path(id: params[:id])
+  end
 
-    return redirect_to quiz_path(id: params[:id]) unless @quiz.joinable?
+  private
 
-    @player = @quiz.players.create!(name: params[:name])
-    session[:player_id] = @player.id
+  def find_quiz!
+    @quiz = Quiz.find_by!(code: params[:id])
+  end
 
-    @quiz.broadcast_players
+  def find_player
+    @player = @quiz.players.find_by(id: session[:player_id])
+  end
+
+  def no_host
+    redirect_to host_quiz_path if session[:hosting_quiz_id] == @quiz.id
   end
 end

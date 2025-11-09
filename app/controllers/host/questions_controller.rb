@@ -3,7 +3,7 @@
 module Host
   class QuestionsController < ApplicationController
     before_action :find_quiz
-    before_action :find_player, only: %i[answer correct incorrect]
+    before_action :find_player!, only: %i[answer correct incorrect]
 
     def show
     end
@@ -37,10 +37,12 @@ module Host
     private
 
     def find_quiz
-      @quiz = Quiz.find_by!(code: session[:hosting])
+      @quiz = Quiz.find_by(id: session[:hosting_quiz_id])
+
+      redirect_to root_path unless @quiz.present?
     end
 
-    def find_player
+    def find_player!
       @player = @quiz.players.find_by!(id: params[:player_id])
     end
   end

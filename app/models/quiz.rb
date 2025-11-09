@@ -9,7 +9,11 @@ class Quiz < ApplicationRecord
   end
 
   def joinable?
-    started_at.nil? && ended_at.nil?
+    !started? && !ended?
+  end
+
+  def started?
+    started_at.present?
   end
 
   def ended?

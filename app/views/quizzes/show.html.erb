@@ -1,4 +1,9 @@
-<% if @quiz.joinable? %>
+<% if @player&.quiz_id == @quiz.id %>
+  <%= turbo_stream_from @quiz %>
+  <div id="quiz">
+    <h1><%= @player.name %>, you're in. Waiting for the host to start the quiz...</h1>
+  </div>
+<% elsif @quiz.joinable? %>
   <%= form_with url: join_quiz_path(@quiz), method: :post, data: { turbo: false } do |form| %>
     <div>
       <%= form.label :name, "Enter your name to join the quiz '#{@quiz.name}':" %>
@@ -9,5 +14,5 @@
     </div>
   <% end %>
 <% else %>
-  <h1>The quiz has already started. Please wait for the next one!</h1
+  <h1>The quiz has already started. Please wait for the next one!</h1>
 <% end %>

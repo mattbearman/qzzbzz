@@ -25,7 +25,7 @@ class Quiz < ApplicationRecord
   end
 
   def broadcast_players
-    broadcast_update target: "players", html: players.map { |p| "<li>#{p.name}</li>" }.join.html_safe
+    broadcast_update target: "players_joined", template: "host/quizzes/_players_joined", locals: { quiz: self }
   end
 
   def broadcast_buzzed_players

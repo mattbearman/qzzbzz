@@ -1,9 +1,10 @@
 <%= form_for :quiz, url: quizzes_path do |form| %>
-  <div>
-    <%= form.label :name, "Enter your name to join the quiz:" %>
-    <%= form.text_field :name %>
+  <h1 class="text-4xl mb-4 font-bold">Create a New Quiz</h1>
+  <div class="flex flex-row content-center gap-6 pb-4">
+    <%= form.label :name, "Enter the name of your quiz:", class: "py-1 border-y-2 border-violet-950" %>
+    <%= form.text_field :name, class: "border-2 rounded-lg border-sky-500 bg-sky-500/20 px-2 py-1" %>
   </div>
   <div>
-    <%= form.submit "Create Quiz" %>
+    <%= form.submit "Create Quiz", class: "bg-emerald-500/80 hover:bg-emerald-500 xtext-white font-bold py-2 px-4 rounded-lg" %>
   </div>
 <% end %>

@@ -8,17 +8,22 @@
     <% end %>
   </ul>
 <% else %>
-  <h1>Join at <%= @join_link %></h1>
 
-  <%= @svg.html_safe %>
+  <div class="p-4 rounded-lg bg-white/90 border-2 inline-block">
+    <%= @svg.html_safe %>
+  </div>
+
+  <h1 class="text-4xl mb-4 font-bold">Quiz "<%= @quiz.name %>" Ready</h1>
+
+  <p class="mb-6">
+    Share the join link with players:
+    <a href="<%= @join_link %>" class="text-sky-400 underline"><%= @join_link %></a>
+  </p>
 
   <%= turbo_stream_from @quiz %>
-  <h2>Players Joined:</h2>
-  <ul id="players">
-    <% @quiz.players.each do |player| %>
-      <li><%= player.name %></li>
-    <% end %>
-  </ul>
+  <div id="players_joined">
+    <%= render "players_joined", quiz: @quiz %>
+  </div>
 
-  <%= button_to 'Start Quiz', start_host_quiz_path %>
+  <%= button_to 'Start Quiz', start_host_quiz_path, class: "bg-emerald-500/80 hover:bg-emerald-500 xtext-white font-bold py-2 px-4 rounded-lg" %>
 <% end %>

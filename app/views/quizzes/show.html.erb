@@ -4,13 +4,14 @@
     <h1><%= @player.name %>, you're in. Waiting for the host to start the quiz...</h1>
   </div>
 <% elsif @quiz.joinable? %>
+  <h1 class="<%= h1_classes %>">Join Quiz: "<%= @quiz.name %>"</h1>
   <%= form_with url: join_quiz_path(@quiz), method: :post, data: { turbo: false } do |form| %>
-    <div>
-      <%= form.label :name, "Enter your name to join the quiz '#{@quiz.name}':" %>
-      <%= form.text_field :name %>
+    <div class="<%= field_classes %>">
+      <%= form.label :name, "Enter your name to join", class: label_classes %>
+      <%= form.text_field :name, class: input_classes %>
     </div>
     <div>
-      <%= form.submit "Join Quiz" %>
+      <%= form.submit "Join Quiz", class: button_classes %>
     </div>
   <% end %>
 <% else %>

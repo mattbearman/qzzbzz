@@ -3,7 +3,8 @@
 class Player < ApplicationRecord
   belongs_to :quiz
 
-  scope :fastest, ->(limit) { where.not(buzzed_at: nil).order(:buzzed_at).limit(limit) }
+  scope :fastest, ->(limit) { buzzed_in.limit(limit) }
+  scope :buzzed_in, -> { where.not(buzzed_at: nil).order(:buzzed_at) }
 
   def call_for_answer
     broadcast_update target: "quiz", html: "<h2>#{name}, please answer!</h2>".html_safe

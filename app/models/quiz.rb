@@ -12,6 +12,10 @@ class Quiz < ApplicationRecord
     !started? && !ended?
   end
 
+  def in_progress?
+    started? && !ended?
+  end
+
   def started?
     started_at.present?
   end
@@ -30,23 +34,28 @@ class Quiz < ApplicationRecord
 
   def broadcast_buzzed_players
     buzzed_players = players.where.not(buzzed_at: nil).order(:buzzed_at)
-    broadcast_update target: "buzzed_players", html: "#{buzzed_players.count} #{"player".pluralize(buzzed_players.count)} buzzed in"
+    broadcast_update target: "players_buzzed", template: "host/questions/_players_buzzed", locals: { quiz: self }
   end
 
   def start!
-    return if started_at.present?
+    return if started?
 
-    update!(started_at: Time.current)
+    update!(started_at: Time.current, current_question: 1)
     broadcast_update target: "quiz", template: "questions/_buzz", locals: { quiz: self }
   end
 
   def next_question!
+    return unless in_progress?
+
+    increment!(:current_question)
     players.update_all(buzzed_at: nil)
 
     broadcast_update target: "quiz", template: "questions/_buzz", locals: { quiz: self }
   end
 
   def end!
+    return if ended?
+
     update!(ended_at: Time.current)
 
     broadcast_update target: "quiz", html: "<h2>Quiz Ended!</h2>".html_safe

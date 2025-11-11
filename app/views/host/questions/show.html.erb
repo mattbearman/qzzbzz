@@ -1,7 +1,12 @@
-<h1>Waiting for players to buzz in...</h1>
+<h1 class="<%= h1_classes %>">Question <%= @quiz.current_question %> in <%= @quiz.name %></h1>
+
+<o>Waiting for players to buzz in...<p>
 
 <%= turbo_stream_from @quiz %>
-<p id="buzzed_players"></p>
-<%= button_to "Call Fastest Player", call_fastest_player_host_quiz_question_path, method: :post %>
-<%= button_to "Next Question", next_host_quiz_question_path, method: :post %>
-<%= button_to "Finish Quiz", end_host_quiz_path, method: :post %>
+<div id="players_buzzed" class="mb-6">
+  <%= render "players_buzzed", quiz: @quiz %>
+</div>
+<div class="flex flex-row gap-4">
+  <%= button_to "Next Question", next_host_quiz_question_path, method: :post, class: button_classes %>
+  <%= button_to "Finish Quiz", end_host_quiz_path, method: :post, class: button_classes(color: :danger) %>
+</div>

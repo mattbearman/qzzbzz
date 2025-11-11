@@ -23,8 +23,8 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="bg-violet-950 text-slate-50 text-lg">
-    <main class="container mx-auto mt-28 px-5">
+  <body class="bg-<%= TailwindHelper::MAIN_BG_COLOR %> text-slate-50 text-lg">
+    <main class="container mx-auto py-8 px-5">
       <%= yield %>
     </main>
   </body>

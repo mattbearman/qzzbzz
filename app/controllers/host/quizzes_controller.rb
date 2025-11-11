@@ -5,7 +5,8 @@ module Host
     before_action :find_quiz
 
     def show
-      # redirect to question if quiz started
+      return redirect_to host_quiz_question_path if @quiz.in_progress?
+
       @join_link = "http://#{`ipconfig getifaddr en0`.chomp}:3000/quizzes/#{@quiz.code}"
       join_qr = RQRCode::QRCode.new(@join_link)
       @svg = join_qr.as_svg(

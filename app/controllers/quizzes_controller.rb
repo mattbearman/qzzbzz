@@ -5,6 +5,9 @@ class QuizzesController < ApplicationController
   before_action :find_player, only: %i[show join]
   before_action :no_host, only: %i[show join]
 
+  def index
+  end
+
   def new
   end
 

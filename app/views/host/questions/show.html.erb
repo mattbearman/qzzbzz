@@ -1,12 +1,11 @@
-<h1 class="<%= h1_classes %>">Question <%= @quiz.current_question %> in <%= @quiz.name %></h1>
+<div class="flex flex-row justify-between">
+  <h1 class="<%= h1_classes %>">Question <%= @quiz.current_question %> in <%= @quiz.name %></h1>
+  <%= button_to "Finish Quiz", end_host_quiz_path, method: :post, class: button_classes(colour: :red, style: :outline), data: { turbo_confirm: "Are you sure you want to finish the quiz?" } %>
+</div>
 
 <o>Waiting for players to buzz in...<p>
 
 <%= turbo_stream_from @quiz %>
 <div id="players_buzzed" class="mb-6">
   <%= render "players_buzzed", quiz: @quiz %>
-</div>
-<div class="flex flex-row gap-4">
-  <%= button_to "Next Question", next_host_quiz_question_path, method: :post, class: button_classes %>
-  <%= button_to "Finish Quiz", end_host_quiz_path, method: :post, class: button_classes(color: :danger) %>
 </div>

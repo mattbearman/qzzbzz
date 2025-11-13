@@ -1,11 +1,12 @@
 <% if @player&.quiz_id == @quiz.id %>
   <%= turbo_stream_from @quiz %>
-  <div id="quiz">
-    <h1><%= @player.name %>, you're in. Waiting for the host to start the quiz...</h1>
+  <div id="quiz" class="text-center">
+    <h1 class="<%= h1_classes %> mb-8">You're in, <%= @player.name %></h1>
+    <p>Waiting for the the quiz to start...</p>
   </div>
 <% elsif @quiz.joinable? %>
   <h1 class="<%= h1_classes %>">Join Quiz: "<%= @quiz.name %>"</h1>
-  <%= form_with url: join_quiz_path(@quiz), method: :post, data: { turbo: false } do |form| %>
+  <%= form_with url: join_quiz_path(id:@quiz), method: :post, data: { turbo: false } do |form| %>
     <div class="<%= field_classes %>">
       <%= form.label :name, "Enter your name to join", class: label_classes %>
       <%= form.text_field :name, class: input_classes %>

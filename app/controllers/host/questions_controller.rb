@@ -30,6 +30,7 @@ module Host
 
     def next
       @quiz.next_question!
+      @quiz.update!(currently_calling_player: nil)
 
       redirect_to host_quiz_question_path
     end

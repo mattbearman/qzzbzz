@@ -25,12 +25,15 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_08_171539) do
     t.string "code", null: false
     t.datetime "created_at", null: false
     t.integer "current_question", default: 0, null: false
+    t.integer "currently_calling_player_id"
     t.datetime "ended_at"
     t.string "name", null: false
     t.datetime "started_at"
     t.datetime "updated_at", null: false
     t.index ["code"], name: "index_quizzes_on_code", unique: true
+    t.index ["currently_calling_player_id"], name: "index_quizzes_on_currently_calling_player_id"
   end
 
   add_foreign_key "players", "quizzes"
+  add_foreign_key "quizzes", "players", column: "currently_calling_player_id"
 end

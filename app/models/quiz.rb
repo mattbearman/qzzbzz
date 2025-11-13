@@ -3,6 +3,7 @@
 class Quiz < ApplicationRecord
   has_many :players, dependent: :destroy
   has_many :questions, dependent: :destroy
+  belongs_to :currently_calling_player, class_name: "Player", optional: true
 
   def to_param
     code

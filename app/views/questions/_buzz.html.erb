@@ -1,3 +1,8 @@
-<div class="text-center">
-  <%= button_to "Buzz!", buzz_quiz_question_path(quiz), method: :post, class: "rounded-full border-5 border-white w-80 h-80 sm:w-96 sm:h-96 text-8xl font-bold bg-radial from-rose-500 to-rose-800 cursor-pointer shadow-xl" %>
+<div class="flex-col h-full justify-between flex">
+  <h1 class="<%= h1_classes(size: "2xl") %> mb-8 text-center text-2xl sm:text-3xl md:text-4xl">Buzz in as soon as you know the answer!</h1>
+  <div class="text-center">
+    <%= button_to "Buzz!", buzz_quiz_question_path(quiz), method: :post, class: "rounded-full border-5 border-white w-80 h-80 sm:w-96 sm:h-96 text-8xl font-bold bg-radial from-rose-500 to-rose-800 cursor-pointer shadow-xl text-shadow-lg" %>
+  </div>
+  <h1 class="<%= h1_classes(size: "2xl") %> mb-8 text-center">&nbsp;</h1>
 </div>
+

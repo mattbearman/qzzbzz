@@ -1,2 +1,4 @@
-<%= button_to "Next Question", next_host_quiz_question_path, method: :post %>
-<%= button_to "Finish Quiz", end_host_quiz_path, method: :post %>
+<div class="flex flex-row gap-4">
+  <%= button_to "Next Question", next_host_quiz_question_path, method: :post, class: button_classes %>
+  <%= button_to "Finish Quiz", end_host_quiz_path, method: :post, class: button_classes(colour: :red) %>
+</div>

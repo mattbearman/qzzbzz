@@ -29,11 +29,13 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :quizzes, only: %i[new create show] do
+  resources :quiz, only: %i[index new create show], controller: "quizzes" do
     post :join, on: :member
 
     resource :question, only: %i[show] do
       post :buzz
     end
   end
+
+  root "quizzes#index"
 end

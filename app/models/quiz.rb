@@ -30,19 +30,19 @@ class Quiz < ApplicationRecord
   end
 
   def broadcast_players
-    broadcast_update target: "players_joined", template: "host/quizzes/_players_joined", locals: { quiz: self }
+    broadcast_update target: "players_joined", partial: "host/quizzes/players_joined", locals: { quiz: self }
   end
 
   def broadcast_buzzed_players
     buzzed_players = players.where.not(buzzed_at: nil).order(:buzzed_at)
-    broadcast_update target: "players_buzzed", template: "host/questions/_players_buzzed", locals: { quiz: self }
+    broadcast_update target: "players_buzzed", partial: "host/questions/players_buzzed", locals: { quiz: self }
   end
 
   def start!
     return if started?
 
     update!(started_at: Time.current, current_question: 1)
-    broadcast_update target: "quiz", template: "questions/_buzz", locals: { quiz: self }
+    broadcast_update target: "quiz", partial: "questions/buzz", locals: { quiz: self }
   end
 
   def next_question!
@@ -51,7 +51,7 @@ class Quiz < ApplicationRecord
     increment!(:current_question)
     players.update_all(buzzed_at: nil)
 
-    broadcast_update target: "quiz", template: "questions/_buzz", locals: { quiz: self }
+    broadcast_update target: "quiz", partial: "questions/buzz", locals: { quiz: self }
   end
 
   def end!
@@ -59,6 +59,12 @@ class Quiz < ApplicationRecord
 
     update!(ended_at: Time.current)
 
-    broadcast_update target: "quiz", html: "<h2>Quiz Ended!</h2>".html_safe
+    players.find_each do |player|
+      next if player == winner
+
+      player.broadcast_update target: "quiz", partial: "quizzes/ended", locals: { quiz: self }
+    end
+
+    winner&.broadcast_update target: "quiz", partial: "quizzes/winner"
   end
 end

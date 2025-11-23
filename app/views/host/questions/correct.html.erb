@@ -1,4 +1,5 @@
+<h1 class="<%= h1_classes %>">Question <%= @quiz.current_question %> in <%= @quiz.name %></h1>
 <div class="flex flex-row gap-4">
   <%= button_to "Next Question", next_host_quiz_question_path, method: :post, class: button_classes %>
-  <%= button_to "Finish Quiz", end_host_quiz_path, method: :post, class: button_classes(colour: :red) %>
+  <%= render "host/questions/finish_quiz_button" %>
 </div>

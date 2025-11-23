@@ -1,3 +1,4 @@
+<h1 class="<%= h1_classes %>">Ask for <%= @player.name %> to answer:</h1>
 <div class="grid grid-rows-2 sm:grid-cols-2 gap-4">
   <%= button_to "Correct", correct_host_quiz_question_path(player_id: @player.id), data: { turbo: false }, class: "w-full #{button_classes(size: :xl)}" %>
   <%= button_to "Incorrect", incorrect_host_quiz_question_path(player_id: @player.id), class: "w-full #{button_classes(size: :xl, colour: :red)}" %>

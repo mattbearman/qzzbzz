@@ -1,7 +1,24 @@
 <% if @quiz.ended? %>
-  <h1>The quiz has ended.</h1>
+  <% @podium_classes = "text-8xl mt-2 flex justify-center items-top bg-linear-to-br to-zinc-400 from-gray-300 text-stone-950" %>
+  <h1 class="<%= h1_classes %> text-center mb-8">Quiz <%= @quiz.name %> has ended</h1>
 
-  <h2>Leaderboard:</h2>
+  <h2 class="<%= h2_classes %>">Top Three:</h2>
+  <div class="grid grid-cols-3 text-center items-end pb-16">
+    <div>
+      <span class="text-4xl"><%= @quiz.players.order(score: :desc).second&.name %></span>
+      <div class="<%= @podium_classes %> h-36 rounded-tl-lg">🥈</div>
+    </div>
+    <div>
+      <span class="text-4xl"><%= @quiz.players.order(score: :desc).first&.name %></span>
+      <div class="<%= @podium_classes %> h-48 rounded-t-lg">🥇</div>
+    </div>
+    <div>
+      <span class="text-4xl"><%= @quiz.players.order(score: :desc).third&.name %></span>
+      <div class="<%= @podium_classes %> h-28 rounded-tr-lg">🥉</div>
+    </div>
+  </div>
+
+  <h2 class="<%= h2_classes %>">Full scores:</h2>
   <ul>
     <% @quiz.players.order(score: :desc).each do |player| %>
       <li><%= player.name %> - <%= player.score %> points</li>

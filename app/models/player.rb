@@ -15,12 +15,12 @@ class Player < ApplicationRecord
     increment!(:score)
     update!(buzzed_at: nil)
 
-    broadcast_update target: "quiz", html: '<div class="text-center text-9xl">✅</div>'.html_safe
+    broadcast_update target: "quiz", partial: "questions/correct"
   end
 
   def incorrect_answer
     update!(buzzed_at: nil)
 
-    broadcast_update target: "quiz", html: '<div class="text-center text-9xl">❌</div>'.html_safe
+    broadcast_update target: "quiz", partial: "questions/incorrect"
   end
 end

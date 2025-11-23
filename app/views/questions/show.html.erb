@@ -1,7 +1,13 @@
 <%= turbo_stream_from @quiz %>
 <%= turbo_stream_from @player %>
 <div id="quiz" class="h-full">
-  <% if @quiz.currently_calling_player == @player %>
+  <% if @quiz.ended? %>
+    <% if @quiz.winner == @player %>
+      <%= render "quizzes/winner" %>
+    <% else %>
+      <%= render "quizzes/ended", quiz: @quiz %>
+    <% end %>
+  <% elsif @quiz.currently_calling_player == @player %>
     <%= render "called" %>
   <% elsif @player&.buzzed_at.present? %>
     <div class="text-center mb-6">

@@ -1,6 +1,6 @@
 <div class="flex flex-row justify-between">
   <h1 class="<%= h1_classes %>">Question <%= @quiz.current_question %> in <%= @quiz.name %></h1>
-  <%= button_to "Finish Quiz", end_host_quiz_path, method: :post, class: button_classes(colour: :red, style: :outline), data: { turbo_confirm: "Are you sure you want to finish the quiz?" } %>
+  <%= render "host/questions/finish_quiz_button" %>
 </div>
 
 <o>Waiting for players to buzz in...<p>

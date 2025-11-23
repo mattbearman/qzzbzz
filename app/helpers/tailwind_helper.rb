@@ -39,7 +39,15 @@ module TailwindHelper
     "border-2 rounded-lg border-sky-500 bg-sky-500/20 px-2 py-1 w-full sm:w-auto"
   end
 
-  def h1_classes(size: "4xl")
+  def h1_classes
+    header_classes(size: "4xl")
+  end
+
+  def h2_classes
+    header_classes(size: "2xl")
+  end
+
+  def header_classes(size:)
     "text-#{size} mb-6 font-bold"
   end
 end

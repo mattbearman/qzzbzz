@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class QuizzesController < ApplicationController
-  before_action :find_quiz!, only: %i[show join]
-  before_action :find_player, only: %i[show join]
+  before_action :find_quiz!, only: %i[show register]
+  before_action :find_player, only: %i[show register]
   before_action :no_host, only: %i[show join]
 
   def index
@@ -27,6 +27,10 @@ class QuizzesController < ApplicationController
   end
 
   def join
+    @quiz = Quiz.find_by(code: params[:id])
+  end
+
+  def register
     if @quiz.joinable? && @player&.quiz_id != @quiz.id
       @player = @quiz.players.create!(name: params[:name])
       session[:player_id] = @player.id
@@ -48,6 +52,6 @@ class QuizzesController < ApplicationController
   end
 
   def no_host
-    redirect_to host_quiz_path if session[:hosting_quiz_id] == @quiz.id
+    redirect_to host_quiz_path if @quiz.present? && session[:hosting_quiz_id] == @quiz.id
   end
 end

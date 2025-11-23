@@ -1,12 +1,8 @@
-<%= form_with url: quiz_index_path, method: :get do |form| %>
-  <%= image_tag "logo.png", alt: "QuizBiscuit Logo", class: "mx-auto xmb-8 max-h-84" %>
-  <h1 class="<%= h1_classes %> text-center">QuizBiscuit</h1>
-  <div class="<%= field_classes %>">
-    <%= form.label :id, "Enter the code of the quiz you're joining:", class: label_classes %>
-    <%= form.text_field :id, class: input_classes %>
+<div class="<%= centered_classes %>">
+  <%= image_tag "logo.png", alt: "QuizBiscuit Logo", class: "mx-auto max-h-84 md:max-h-96" %>
+  <h1 class="<%= h1_classes %>">Welcome to Quiz&nbsp;Biscuit</h1>
+  <div class="<%= button_row_classes %>">
+    <%= link_to "Create Quiz", new_quiz_path, class: button_classes(colour: :blue) %>
+    <%= link_to "Join Quiz", join_quiz_path, class: button_classes(colour: :green) %>
   </div>
-  <div class="flex flex-row gap-4 justify-between">
-    <%= link_to "Create a New Quiz", new_quiz_path, class: button_classes(colour: :blue, style: :outline) %>
-    <%= form.submit "Join Quiz", class: button_classes %>
-  </div>
-<% end %>
+</div>

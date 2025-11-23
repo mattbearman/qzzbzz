@@ -1,0 +1,27 @@
+<div class="<%= centered_classes %>">
+  <%= image_tag "logo.png", alt: "QuizBiscuit Logo", class: "mx-auto max-h-48" %>
+  <h1 class="<%= h1_classes %>">
+    Join Quiz
+    <% if @quiz.present? %>
+      <br>
+      "<%= @quiz.name %>"
+    <% end %>
+  </h1>
+  <%= form_with url: register_for_quiz_path, method: :post, data: { turbo: false }, class: "w-full" do |form| %>
+    <% if @quiz.present? %>
+      <%= form.hidden_field :id, value: @quiz.code %>
+    <% else %>
+      <div class="<%= field_classes %>">
+        <%= form.label :id, "Enter the quiz code:", class: label_classes %>
+        <%= form.text_field :id, class: input_classes, autofocus: true %>
+      </div>
+    <% end %>
+    <div class="<%= field_classes %>">
+      <%= form.label :name, "Enter your name:", class: label_classes %>
+      <%= form.text_field :name, class: input_classes %>
+    </div>
+    <div>
+      <%= form.submit "Join Quiz", class: "#{button_classes} w-full" %>
+    </div>
+  <% end %>
+</div>

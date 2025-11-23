@@ -25,9 +25,10 @@
     <% end %>
   </ul>
 <% else %>
-  <div class="p-4 rounded-lg bg-white/90 border-2 inline-block">
+  <%= image_tag "logo.png", alt: "QuizBiscuit Logo", class: "mx-auto max-h-48" %>
+  <!-- div class="p-4 rounded-lg bg-white/90 border-2 inline-block">
     <%= @svg.html_safe %>
-  </div>
+  </div -->
 
   <h1 class="text-4xl mb-4 font-bold">Quiz "<%= @quiz.name %>" is ready</h1>
 
@@ -41,5 +42,5 @@
     <%= render "players_joined", quiz: @quiz %>
   </div>
 
-  <%= button_to 'Start Quiz', start_host_quiz_path, class: "bg-emerald-500/80 hover:bg-emerald-500 xtext-white font-bold py-2 px-4 rounded-lg" %>
+  <%= button_to 'Start Quiz', start_host_quiz_path, class: button_classes %>
 <% end %>

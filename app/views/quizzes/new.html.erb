@@ -1,10 +1,12 @@
-<%= form_for :quiz, url: quiz_index_path do |form| %>
+<%= form_for :quiz, url: quiz_index_path, class: centered_classes do |form| %>
+  <%= image_tag "logo.png", alt: "QuizBiscuit Logo", class: "mx-auto max-h-48" %>
   <h1 class="<%= h1_classes %>">Create a New Quiz</h1>
   <div class="<%= field_classes %>">
     <%= form.label :name, "Enter the name of your quiz:", class: label_classes %>
-    <%= form.text_field :name, class: input_classes %>
+    <%= form.text_field :name, class: input_classes, autofocus: true %>
   </div>
-  <div>
+  <div class="<%= button_row_classes %>">
+    <%= link_to "Cancel", root_path, class: button_classes(colour: :grey, style: :outline) %>
     <%= form.submit "Create Quiz", class: button_classes %>
   </div>
 <% end %>

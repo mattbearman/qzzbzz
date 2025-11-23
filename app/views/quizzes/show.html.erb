@@ -1,20 +1,24 @@
-<% if @player&.quiz_id == @quiz.id %>
-  <%= turbo_stream_from @quiz %>
-  <div id="quiz" class="text-center">
-    <h1 class="<%= h1_classes %> mb-8">You're in, <%= @player.name %></h1>
-    <p>Waiting for the the quiz to start...</p>
-  </div>
-<% elsif @quiz.joinable? %>
-  <h1 class="<%= h1_classes %>">Join Quiz: "<%= @quiz.name %>"</h1>
-  <%= form_with url: join_quiz_path(id:@quiz), method: :post, data: { turbo: false } do |form| %>
-    <div class="<%= field_classes %>">
-      <%= form.label :name, "Enter your name to join", class: label_classes %>
-      <%= form.text_field :name, class: input_classes %>
+<div class="<%= centered_classes %>">
+  <% if @player&.quiz_id == @quiz.id %>
+    <%= turbo_stream_from @quiz %>
+    <div id="quiz">
+      <%= image_tag "logo.png", alt: "QuizBiscuit Logo", class: "mx-auto max-h-48" %>
+      <h1 class="<%= h1_classes %> mb-8">You're in, <%= @player.name %></h1>
+      <p>Waiting for the the quiz to start...</p>
     </div>
-    <div>
-      <%= form.submit "Join Quiz", class: button_classes %>
-    </div>
+  <% elsif @quiz.joinable? %>
+    <%= image_tag "logo.png", alt: "QuizBiscuit Logo", class: "mx-auto max-h-48" %>
+    <h1 class="<%= h1_classes %>">Join Quiz<br>"<%= @quiz.name %>"</h1>
+    <%= form_with url: join_quiz_path(id:@quiz), method: :post, data: { turbo: false }, class: "w-full" do |form| %>
+      <div class="<%= field_classes %>">
+        <%= form.label :name, "Enter your name to join:", class: label_classes %>
+        <%= form.text_field :name, class: input_classes %>
+      </div>
+      <div>
+        <%= form.submit "Join Quiz", class: "#{button_classes} w-full" %>
+      </div>
+    <% end %>
+  <% else %>
+    <h1>The quiz has already started. Please wait for the next one!</h1>
   <% end %>
-<% else %>
-  <h1>The quiz has already started. Please wait for the next one!</h1>
-<% end %>
+</div>

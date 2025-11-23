@@ -23,31 +23,35 @@ module TailwindHelper
     xl: "py-10 px-14 rounded-xl text-3xl sm:text-4xl"
   }.freeze
 
-  def button_classes(colour: :green, size: :md, style: :filled)
+  def button_classes(colour: :green, size: :lg, style: :filled)
     "#{BUTTON_COLOURS[style][colour]} font-bold cursor-pointer inline-block #{BUTTON_SIZES[size]}"
   end
 
+  def centered_classes
+    "flex flex-col gap-4 md:gap-6 items-center justify-center h-full w-full max-w-md mx-auto"
+  end
+
   def field_classes
-    "flex flex-col sm:flex-row content-center sm:gap-6 pb-4"
+    "flex flex-col content-center pb-4 w-full gap-2"
   end
 
   def label_classes
-    "py-1 border-y-2 border-violet-950/0"
+    "text-xl"
   end
 
   def input_classes
-    "border-2 rounded-lg border-sky-500 bg-sky-500/20 px-2 py-1 w-full sm:w-auto"
+    "block text-xl border-2 rounded-lg border-sky-500 bg-sky-500/20 px-4 py-4 w-full"
+  end
+
+  def button_row_classes
+    "flex flex-row justify-between gap-4 w-full"
   end
 
   def h1_classes
-    header_classes(size: "4xl")
+    "text-4xl mb-6 font-extrabold"
   end
 
   def h2_classes
-    header_classes(size: "2xl")
-  end
-
-  def header_classes(size:)
-    "text-#{size} mb-6 font-bold"
+    "text-2xl mb-4 font-bold"
   end
 end

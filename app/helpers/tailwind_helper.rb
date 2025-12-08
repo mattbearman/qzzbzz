@@ -47,11 +47,11 @@ module TailwindHelper
     "flex flex-row justify-between gap-4 w-full"
   end
 
-  def h1_classes
-    "text-4xl mb-6 font-extrabold"
+  def h1_classes(spaced: true)
+    "text-4xl #{'mb-6' if spaced} font-extrabold"
   end
 
-  def h2_classes
-    "text-2xl mb-4 font-bold"
+  def h2_classes(spaced: true)
+    "text-2xl #{'mb-4' if spaced} font-bold"
   end
 end

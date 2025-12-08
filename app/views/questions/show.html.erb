@@ -14,7 +14,9 @@
       <h1 class="<%= h1_classes %>">You have buzzed in!</h1>
       <p>But were you quickest?</p>
     </div>
+  <% elsif @player.locked_out? %>
+    <h2 class="<%= h2_classes %>">Please wait for the next question.</h1>
   <% else %>
-    <%= render "buzz", quiz: @quiz %>
+    <%= render "buzz", quiz: @quiz, player: @player %>
   <% end %>
 </div>

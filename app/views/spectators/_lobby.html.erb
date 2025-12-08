@@ -1,0 +1,19 @@
+    <div class="flex flex-row gap-4 h-full items-stretch">
+      <div class="basis-1/2 flex flex-col items-center justify-center">
+        <h1 class="<%= h1_classes %>">Scan to join quiz "<%= quiz.name %>"</h1>
+        <div class="aspect-square flex-auto max-w-full">
+          <%= join_qr_svg.html_safe %>
+        </div>
+        <h2 class="<%= h2_classes %>">
+          Or go to <%= join_quiz_url %> and enter code
+          <br>
+          <code class="font-mono text-6xl font-normal"><%= quiz.code %></code>
+        </h2>
+      </div>
+
+      <div class="basis-1/2">
+        <div id="players_joined">
+          <%= render "shared/players_joined", quiz: quiz %>
+        </div>
+      </div>
+    </div>

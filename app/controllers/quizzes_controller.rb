@@ -44,7 +44,7 @@ class QuizzesController < ApplicationController
   private
 
   def find_quiz!
-    @quiz = Quiz.find_by!(code: params[:id])
+    @quiz = Quiz.find_by!(code: params[:id].upcase)
   end
 
   def find_player

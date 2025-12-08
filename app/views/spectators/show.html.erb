@@ -1,0 +1,14 @@
+<%= turbo_stream_from @quiz %>
+<div id="spectator" class="h-full">
+  <% if @quiz.in_progress? %>
+    <% if @quiz.currently_calling_player.present? %>
+      <%= render "calling_player", quiz: @quiz %>
+    <% else %>
+      <%= render "question", quiz: @quiz %>
+    <% end %>
+  <% elsif @quiz.ended? %>
+    <%= render "finished", quiz: @quiz %>
+  <% else %>
+    <%= render "lobby", quiz: @quiz, join_qr_svg: @join_qr_svg %>
+  <% end %>
+</div>

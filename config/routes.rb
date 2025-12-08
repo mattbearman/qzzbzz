@@ -29,13 +29,15 @@ Rails.application.routes.draw do
     end
   end
 
-  get "quiz/join(/:id)", to: "quizzes#join", as: :join_quiz
-  post "quiz/join(/:id)", to: "quizzes#register", as: :register_for_quiz
+  get "join(/:id)", to: "quizzes#join", as: :join_quiz
+  post "join(/:id)", to: "quizzes#register", as: :register_for_quiz
   resources :quiz, only: %i[index new create show], controller: "quizzes" do
     resource :question, only: %i[show] do
       post :buzz
     end
   end
+
+  get "view/:code", to: "spectators#show", as: :spectate_quiz
 
   root "quizzes#index"
 end

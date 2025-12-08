@@ -11,6 +11,7 @@ module Host
     def call_fastest_player
       @player = @quiz.players.fastest(1).first
       @player.call_for_answer if @player
+      @quiz.broadcast_calling_player
 
       redirect_to answer_host_quiz_question_path(player_id: @player.id)
     end

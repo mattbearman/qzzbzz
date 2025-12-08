@@ -10,10 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_11_08_171539) do
+ActiveRecord::Schema[8.1].define(version: 2025_12_08_120550) do
   create_table "players", force: :cascade do |t|
     t.datetime "buzzed_at"
     t.datetime "created_at", null: false
+    t.boolean "locked_out", default: false, null: false
     t.string "name", null: false
     t.integer "quiz_id", null: false
     t.integer "score", default: 0, null: false

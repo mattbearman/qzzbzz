@@ -1,24 +1,6 @@
 <% if @quiz.ended? %>
-  <% @podium_classes = "text-8xl mt-2 flex justify-center items-top bg-linear-to-br to-zinc-400 from-gray-300 text-stone-950" %>
-  <h1 class="<%= h1_classes %> text-center mb-8">Quiz <%= @quiz.name %> has ended</h1>
-
-  <h2 class="<%= h2_classes %>">Top Three:</h2>
-  <div class="grid grid-cols-3 text-center items-end pb-16">
-    <div>
-      <span class="text-4xl"><%= @quiz.players.order(score: :desc).second&.name %></span>
-      <div class="<%= @podium_classes %> h-36 rounded-tl-lg">🥈</div>
-    </div>
-    <div>
-      <span class="text-4xl"><%= @quiz.players.order(score: :desc).first&.name %></span>
-      <div class="<%= @podium_classes %> h-48 rounded-t-lg">🥇</div>
-    </div>
-    <div>
-      <span class="text-4xl"><%= @quiz.players.order(score: :desc).third&.name %></span>
-      <div class="<%= @podium_classes %> h-28 rounded-tr-lg">🥉</div>
-    </div>
-  </div>
-
-  <h2 class="<%= h2_classes %>">Full scores:</h2>
+  <h1 class="<%= h1_classes %>">Quiz Finished</h1>
+  <h2 class="<%= h2_classes %>">Scoreboard:</h2>
   <ul>
     <% @quiz.players.order(score: :desc).each do |player| %>
       <li><%= player.name %> - <%= player.score %> points</li>
@@ -26,11 +8,13 @@
   </ul>
 <% else %>
   <%= image_tag "logo.png", alt: "QuizBiscuit Logo", class: "mx-auto max-h-48" %>
-  <!-- div class="p-4 rounded-lg bg-white/90 border-2 inline-block">
-    <%= @svg.html_safe %>
-  </div -->
 
   <h1 class="text-4xl mb-4 font-bold">Quiz "<%= @quiz.name %>" is ready</h1>
+
+  <p class="mb-6">
+    To add big screen display, go to this address on the big screen:
+    <a href="<%= spectate_quiz_url(@quiz) %>" class="text-sky-400 underline"><%= spectate_quiz_url(@quiz) %></a>
+  </p>
 
   <p class="mb-6">
     Share the join link with players:
@@ -39,7 +23,7 @@
 
   <%= turbo_stream_from @quiz %>
   <div id="players_joined">
-    <%= render "players_joined", quiz: @quiz %>
+    <%= render "shared/players_joined", quiz: @quiz %>
   </div>
 
   <%= button_to 'Start Quiz', start_host_quiz_path, class: button_classes %>

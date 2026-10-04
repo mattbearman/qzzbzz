@@ -1,1 +1,4 @@
-<h1 class="<%= h1_classes %>"><%= quiz.currently_calling_player.name %>, it's your turn to answer!</h1>
+<div class="h-full flex flex-col justify-center gap-8">
+  <h1 class="<%= h1_classes(spaced: false) %>"><%= quiz.currently_calling_player.name %></h1>
+  <h2 class="<%= h2_classes(spaced: false) %>">it's your turn to answer!</h2>
+</div>

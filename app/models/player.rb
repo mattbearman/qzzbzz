@@ -36,6 +36,7 @@ class Player < ApplicationRecord
   def correct_answer
     increment!(:score)
     update!(buzzed_at: nil)
+    quiz.update!(currently_calling_player: nil)
 
     broadcast_update target: "quiz", partial: "questions/correct"
   end
